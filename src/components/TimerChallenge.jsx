@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
-let timer; // Timer ID for managing the timeout, to solve our issue we can move the timer variable outside the component function.
+// let timer; // Timer ID for managing the timeout, to solve our issue we can move the timer variable outside the component function.
 // But now this will be shared across all instances of the component. This  may result in unexpected behavior if multiple instances
 //  of the component are rendered simultaneously.
 
 export default function TimerChallenge({ title, targetTime }) {
+  let timer = useRef(); // Using useRef to persist the timer ID across renders without causing re-renders.
   const [timerStarted, setTimerStarted] = useState(false);
   const [timerExpired, setTimerExpired] = useState(false);
 
@@ -14,14 +15,14 @@ export default function TimerChallenge({ title, targetTime }) {
 
   function handleStart() {
     setTimerStarted(true);
-    timer = setTimeout(() => {
+    timer.current = setTimeout(() => {
       setTimerExpired(true);
       alert("Time's up!");
     }, targetTime * 1000);
   }
 
   function handleStop() {
-    clearTimeout(timer);
+    clearTimeout(timer.current);
   }
 
   return (
