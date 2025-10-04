@@ -1,6 +1,8 @@
 import { useState } from "react";
 
 let timer; // Timer ID for managing the timeout, to solve our issue we can move the timer variable outside the component function.
+// But now this will be shared across all instances of the component. This  may result in unexpected behavior if multiple instances
+//  of the component are rendered simultaneously.
 
 export default function TimerChallenge({ title, targetTime }) {
   const [timerStarted, setTimerStarted] = useState(false);
