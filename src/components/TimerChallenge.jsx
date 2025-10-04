@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import ResultModal from "./ResultModal";
 
 // let timer; // Timer ID for managing the timeout, to solve our issue we can move the timer variable outside the component function.
 // But now this will be shared across all instances of the component. This  may result in unexpected behavior if multiple instances
@@ -26,9 +27,10 @@ export default function TimerChallenge({ title, targetTime }) {
   }
 
   return (
+    <>
+    { timerExpired && <ResultModal targetTime={targetTime} result={"lost"} />}
     <section className="challenge">
       <h2>{title}</h2>
-      {timerExpired && <p>You Lost!!</p>}
       <p className="challenge-time">
         {targetTime} second{targetTime > 1 ? "s" : ""}
       </p>
@@ -41,5 +43,6 @@ export default function TimerChallenge({ title, targetTime }) {
         {timerStarted ? "time is running..." : "timer inactive"}
       </p>
     </section>
+    </>
   );
 }
