@@ -16,10 +16,12 @@ const timerIsActive = timeRemaining > 0 && timeRemaining < targetTime * 1000;
 
 if(timeRemaining <= 0) {
     clearInterval(timer.current);
-    setTimeRemaining(targetTime * 1000); // Resetting the timer for future attempts.
     dialog.current.open();
 }
 
+ function handleReset() {
+    setTimeRemaining(targetTime * 1000); // Resetting the timer for future attempts.
+ }
 //   let timer; // Timer ID for managing the timeout, 
   // If we keep it here a new variable will be created on each render and the timer for setting the timer will not be 
   // similar to the one for clearing the timer.
@@ -38,7 +40,7 @@ if(timeRemaining <= 0) {
 
   return (
     <>
-    <ResultModal ref={dialog} targetTime={targetTime} result={"lost"} />
+    <ResultModal ref={dialog} targetTime={targetTime} remainingTime={timeRemaining} onReset={handleReset} />
     <section className="challenge">
       <h2>{title}</h2>
       <p className="challenge-time">
